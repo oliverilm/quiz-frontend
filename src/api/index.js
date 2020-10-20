@@ -13,9 +13,9 @@ const postRequest = (path, content) => {
 
 
 export default {
-    getQuizes : () => getRequest("quiz-list-create"),
-    createQuiz : (name) => postRequest("quiz-list-create", {name}),
+    getQuizes: () => getRequest("quiz-list-create"),
+    createQuiz: (name) => postRequest("quiz-list-create", { name }),
 
-    getQuiz : (pk) => getRequest(`quiz-detail/${pk}`),
+    getQuiz: (pk) => getRequest(`quiz-detail/${pk}`),
     createQuestion: (pk, question, answers) => postRequest(`quiz-detail/${pk}`, { value: question, answers })
 }
