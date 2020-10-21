@@ -1,5 +1,6 @@
 import { Divider, Typography, FormControl, Input, InputLabel, FormHelperText, Button } from "@material-ui/core";
 import React, { useState } from "react";
+import AddQuestionForm from "./AddQuestionForm"
 import api from "../../api/index"
 const CreateQuiz = () => {
     const [name, setName] = useState(null)
@@ -31,22 +32,41 @@ const CreateQuiz = () => {
                 <Input
                     id="my-input"
                     aria-describedby="my-helper-text"
-                    onChange={(e) => { setName(e.target.value) }} />
+                    disabled={createdQuiz !== null}
+                    onChange={(e) => { setName(e.target.value) }} 
+                />
+
                 <FormHelperText id="my-helper-text">Name for your new quiz</FormHelperText>
+
             </FormControl>
-            {name !== null && name.length !== 0 && success === false && createdQuiz === null ? (
+            {
+                name !== null 
+                && name.length !== 0 
+                && success === false 
+                && createdQuiz === null ? (
+
                 <div>
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => { create() }}>Create</Button>
+                        onClick={() => { create() }}>
+                            Create
+                    </Button>
                 </div>
+
             ) : <></>}
 
-            {createdQuiz !== null && success === true ? (
-                <div>
-                    success
+            {
+                createdQuiz !== null 
+                && success === true ? (
+
+                <div style={{
+                    textAlign: "center",
+                    marginTop: "2em"
+                }}>
+                    <AddQuestionForm />
                 </div>
+
             ) : <></>}
         </div>
     )

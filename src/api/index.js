@@ -15,7 +15,8 @@ const postRequest = (path, content) => {
 export default {
     getQuizes: () => getRequest("quiz-list-create"),
     createQuiz: (name) => postRequest("quiz-list-create", { name }),
+    deleteQuiz: (id) => postRequest("delete-quiz", { id }),
 
     getQuiz: (pk) => getRequest(`quiz-detail/${pk}`),
-    createQuestion: (pk, question, answers) => postRequest(`quiz-detail/${pk}`, { value: question, answers })
+    createQuestion: (id, question, answers) => postRequest(`add-answer`, { quizId: id, value: question, answers })
 }

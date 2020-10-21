@@ -5,33 +5,37 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Link } from "react-router-dom";
-import "./style.css"
 
 const useStyles = makeStyles({
+  root: {
+    minWidth: 250,
+    maxWidth: 250
+  },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
     transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 12,
+    fontSize: 14,
   },
-  
+  pos: {
+    marginBottom: 12,
+  },
 });
 
-export default ({ name, id }) => {
+export default ({name}) => {
   const classes = useStyles();
 
   return (
-    <Card className={"card-g"} >
+    <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {name}
+            {name}
         </Typography>
       </CardContent>
       <CardActions>
-        <Link to={`/quiz/${id}`} component={Button} size="small">Take quiz</Link>
+        <Button size="small">Learn More</Button>
       </CardActions>
     </Card>
   );
