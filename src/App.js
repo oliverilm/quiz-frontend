@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Home from './components/home/Home';
 import CreateQuiz from "./components/create/CreateQuiz"
 import QuizDetail from "./components/detail/QuizDetail"
@@ -23,13 +23,13 @@ const useStyles = makeStyles({
     width: "100%",
     position: "fixed",
     bottom: 0,
-    left:0,
+    left: 0,
     textAlign: "center",
     zIndex: 100,
     backgroundColor: "#6200EE",
   },
-  
-  
+
+
 });
 function App() {
   const classes = useStyles();
@@ -39,36 +39,47 @@ function App() {
     <Router>
       {/** here comes the nav bar */}
       <div>
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        showLabels
-        className={classes.root}
-      >
-        <BottomNavigationAction style={value === 0 ? {color: "#FFF"} : null} component={Link} to="/" label="Quiz List" icon={<ListIcon />} />
-        <BottomNavigationAction style={value === 1 ? {color: "#FFF"} : null} component={Link} to="/stats" label="Stats" icon={<EqualizerIcon />} />
-        <BottomNavigationAction style={value === 2 ? {color: "#FFF"} : null} component={Link} to="/create" label="Create Quiz" icon={<AddIcon />} />
-      </BottomNavigation>
+        <BottomNavigation
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          showLabels
+          className={classes.root}
+        >
+          <BottomNavigationAction style={value === 0 ? { color: "#FFF" } : null} component={Link} to="/" label="Quiz List" icon={<ListIcon />} />
+          <BottomNavigationAction style={value === 1 ? { color: "#FFF" } : null} component={Link} to="/stats" label="Stats" icon={<EqualizerIcon />} />
+          <BottomNavigationAction style={value === 2 ? { color: "#FFF" } : null} component={Link} to="/create" label="Create Quiz" icon={<AddIcon />} />
+        </BottomNavigation>
       </div>
-      <Grid container style={{display: "flex", justifyContent: "center"}}>
+      <Grid container style={{ display: "flex", justifyContent: "center", marginBottom: "4em" }}>
         <Switch>
           <Route path="/stats">
-            <Statistics />
+            <Suspense fallback={<div>Loading</div>}>
+              <Statistics />
+            </Suspense>
+
           </Route>
           <Route path="/quiz/:id">
+            <Suspense fallback={<div>Loading</div>}>
               <QuizDetail />
+            </Suspense>
+
           </Route>
           <Route path="/create">
-            <CreateQuiz />
+            <Suspense fallback={<div>Loading</div>}>
+              <CreateQuiz />
+            </Suspense>
           </Route>
           <Route path="/">
-            <Home />
+            <Suspense fallback={<div>Loading</div>}>
+              <Home />
+            </Suspense>
+
           </Route>
         </Switch>
       </Grid>
-    </Router>
+    </Router >
   );
 }
 

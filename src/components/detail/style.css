@@ -13,10 +13,11 @@
     background-color: #90caf9 ;
 }
 
-.q-a {
-    transition: all .2s;
-    animation: FadeIn .2s linear
+.q-a:focus {
+    transition: all .2s !important;
+    animation: FadeIn .2s ease-in !important
 }
+
 
 @keyframes FadeIn {
     from {
@@ -24,4 +25,16 @@
     } to {
         opacity: 1;
     }
+}
+
+.correct {
+    background-color: "#66bb6a";
+}
+.false {
+    background-color: "#ef5350"
+}
+td{
+    padding: .4em;
+    font-size: 10;
+    text-align: center;
 }

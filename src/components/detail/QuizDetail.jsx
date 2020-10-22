@@ -1,5 +1,5 @@
-import { Typography,Divider,Button } from "@material-ui/core";
-import React, {useEffect, useState} from "react"
+import { Typography, Divider, Button } from "@material-ui/core";
+import React, { useEffect, useState } from "react"
 import { useParams, useHistory } from "react-router-dom";
 import api from "../../api";
 import Menu from '@material-ui/core/Menu';
@@ -35,11 +35,11 @@ const QuizDetail = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     };
-  
+
     const handleClose = () => {
-      setAnchorEl(null);
+        setAnchorEl(null);
     };
 
     const startQuiz = () => {
@@ -49,62 +49,76 @@ const QuizDetail = () => {
     const stopGame = () => {
         setGameStarted(false)
     }
-  
-    
+
+    const sendSession = ({ falselyAnswered, correctlyAnswered, quiz }) => {
+
+    }
+
+    const renderAllQuestions = () => {
+        return quiz.questions.map((q, i) => {
+            return <Typography variant={"body2"} style={{ marginTop: 5, fontSize: 14 }}>{i + 1}. {q.question_value}</Typography>
+        })
+    }
+
+
     return (
 
-        <div style={{ width: "100%", maxWidth: 600}}>
+        <div style={{ width: "100%", maxWidth: 600 }}>
             {!gameStarted ? (
                 <div>
                     {quiz ? (
-            <div>
-                <div style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginBottom: 10,
-                }}>
-                <Typography variant="h5">{quiz.name}</Typography>
-                <MoreVertIcon  onClick={handleClick}/>
-                <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                >
-                <MenuItem onClick={handleClose}>Edit quiz</MenuItem>
-                <MenuItem onClick={() => {
-                    handleClose(); deleteQuiz()
-                }}>Delete Quiz</MenuItem>
-                </Menu>
-                </div>
-                <Divider />
-            <Typography variant="subtitle2">Contains {quiz.questions.length} questions </Typography>
+                        <div>
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                marginBottom: 10,
+                            }}>
+                                <Typography variant="h5">{quiz.name}</Typography>
+                                <MoreVertIcon onClick={handleClick} />
+                                <Menu
+                                    id="simple-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                >
+                                    <MenuItem onClick={handleClose}>Edit quiz</MenuItem>
+                                    <MenuItem onClick={() => {
+                                        handleClose(); deleteQuiz()
+                                    }}>Delete Quiz</MenuItem>
+                                </Menu>
+                            </div>
+                            <Divider />
+                            <Typography variant="subtitle2" style={{ marginTop: 10 }}>Contains {quiz.questions.length} questions </Typography>
 
-                <div style={{
-                    minWidth: "100%",
-                    width: "100%"
-                }}>
-                     <Button 
-                        variant={"contained"} 
-                        color="primary" 
-                        onClick={() => {
-                            startQuiz()
-                        }}>
-                        Start the quiz
+                            <div style={{
+                                minWidth: "100%",
+                                width: "100%",
+                                marginTop: 10
+                            }}>
+                                <Button
+                                    variant={"contained"}
+                                    color="primary"
+                                    onClick={() => {
+                                        startQuiz()
+                                    }}
+                                    style={{ minWidth: "100%" }}>
+                                    Start the quiz
                     </Button>
-                   
-                </div>
-                
-            </div>
 
-        ) : <></>}
+                            </div>
+                            <div style={{ marginTop: "1em" }}>
+                                {renderAllQuestions()}
+                            </div>
+                        </div>
+
+                    ) : <></>}
                 </div>
             ) : (
-                <Game quiz={quiz} stopGame={stopGame} />
-            )}
-            
+                    <Game quiz={quiz} stopGame={stopGame} sendSession={sendSession} />
+                )}
+
         </div>
     )
 
