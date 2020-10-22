@@ -28,11 +28,7 @@ const useStyles = makeStyles({
     zIndex: 100,
     backgroundColor: "#6200EE",
   },
-  app: {
-    display: "flex",
-    justifyContent: "center",
-    marginBottom: "4em"
-  }
+  
   
 });
 function App() {
@@ -56,66 +52,19 @@ function App() {
         <BottomNavigationAction style={value === 2 ? {color: "#FFF"} : null} component={Link} to="/create" label="Create Quiz" icon={<AddIcon />} />
       </BottomNavigation>
       </div>
-      <Grid container>
+      <Grid container style={{display: "flex", justifyContent: "center"}}>
         <Switch>
           <Route path="/stats">
-          <Grid 
-              container 
-              item 
-              className={classes.app} 
-              xl={9} 
-              md={10} 
-              sm={11} 
-              xs={12}
-              justifyContent="center"
-              width="100%">
             <Statistics />
-            </Grid>
-
           </Route>
           <Route path="/quiz/:id">
-            <Grid 
-              container 
-              item 
-              className={classes.app} 
-              xl={9} 
-              md={10} 
-              sm={11} 
-              xs={12}
-              justifyContent="center"
-              width="100%">
               <QuizDetail />
-            </Grid>
           </Route>
           <Route path="/create">
-          <Grid 
-              container 
-              item 
-              className={classes.app} 
-              xl={9} 
-              md={10} 
-              sm={11} 
-              xs={12}
-              justifyContent="center"
-              width="100%">
             <CreateQuiz />
-            </Grid>
-
           </Route>
           <Route path="/">
-          <Grid 
-              container 
-              item 
-              className={classes.app} 
-              xl={9} 
-              md={10} 
-              sm={11} 
-              xs={12}
-              justifyContent="center"
-              width="100%">
             <Home />
-            </Grid>
-
           </Route>
         </Switch>
       </Grid>

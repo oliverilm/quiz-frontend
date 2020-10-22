@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import api from "../../api/index"
 
 
-const AddQuestionForm = (pk) => {
+const AddQuestionForm = (id) => {
     const [answers, setAnswers] = React.useState([{index: 0, value: null, correct: false}])
     const [question, setQuestion] = React.useState(null)
     const setChecked = (answer, index) => {
@@ -37,7 +37,8 @@ const AddQuestionForm = (pk) => {
     }
 
     const submit = () => {
-        api.createQuestion(pk, question, answers).then(res => {
+        console.log(id, question, answers)
+        api.createQuestion(id.id, question, answers).then(res => {
             setAnswers([])
             setQuestion("")
         })
@@ -108,9 +109,11 @@ const AddQuestionForm = (pk) => {
              </TableBody>
                 </Table>
             </div>
-            <Button color="primary" variant="outlined" onClick={() => {
-                submit()
-            }}>Submit Question</Button>
+                <Button color="primary" variant="outlined" onClick={() => {
+                    submit()
+                }}>
+                    Submit Question
+                </Button>
             </div>
         </div>
     )

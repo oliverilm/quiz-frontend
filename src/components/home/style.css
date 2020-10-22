@@ -1,6 +1,17 @@
 .card-g {
-    min-width: 250px;
-    max-width: 250px;
-    margin: 1em;
-    background-color: black;
-  }
+  transition: all .3s;
+  min-width: 250px;
+  max-width: 250px;
+  margin: 1em;
+  background-color: black;
+}
+
+.card-g:hover{
+  transition: all .3s;
+  background-color: hsl(208, 79%, 51%);
+}
+
+.card-g:hover > .card-g-title, .card-g-button {
+  color: #fff
+}
+

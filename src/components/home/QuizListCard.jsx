@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import "./style.css"
+import { Divider } from '@material-ui/core';
 
 const useStyles = makeStyles({
   bullet: {
@@ -26,12 +27,13 @@ export default ({ name, id }) => {
   return (
     <Card className={"card-g"} >
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        <Typography className={"card-g-title"} color="textSecondary" gutterBottom>
           {name}
         </Typography>
+        <Divider />
       </CardContent>
       <CardActions>
-        <Link to={`/quiz/${id}`} component={Button} size="small">Take quiz</Link>
+        <Link to={`/quiz/${id}`} component={Button} className={"card-g-button"} size="small">Take quiz</Link>
       </CardActions>
     </Card>
   );

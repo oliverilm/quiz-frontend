@@ -2,6 +2,8 @@ import { Divider, Typography, FormControl, Input, InputLabel, FormHelperText, Bu
 import React, { useState } from "react";
 import AddQuestionForm from "./AddQuestionForm"
 import api from "../../api/index"
+
+
 const CreateQuiz = () => {
     const [name, setName] = useState(null)
     const [success, setSuccess] = useState(false)
@@ -20,7 +22,6 @@ const CreateQuiz = () => {
         <div>
             <Typography variant="h4">Create a new quiz</Typography>
             <Divider />
-
 
             <FormControl style={{
                 marginTop: "1em",
@@ -64,7 +65,7 @@ const CreateQuiz = () => {
                     textAlign: "center",
                     marginTop: "2em"
                 }}>
-                    <AddQuestionForm />
+                    <AddQuestionForm id={createdQuiz.id} />
                 </div>
 
             ) : <></>}

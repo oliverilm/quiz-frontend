@@ -1,0 +1,27 @@
+.answer {
+    transition: all .2s;
+    user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
+    text-align: center;
+}
+
+.answer:hover {
+    transition: all .2s;
+    background-color: #90caf9 ;
+}
+
+.q-a {
+    transition: all .2s;
+    animation: FadeIn .2s linear
+}
+
+@keyframes FadeIn {
+    from {
+        opacity: 0;
+    } to {
+        opacity: 1;
+    }
+}
