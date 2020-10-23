@@ -19,5 +19,5 @@ export default {
 
     getQuiz: (pk) => getRequest(`quiz-detail/${pk}`),
     createQuestion: (id, question, answers) => postRequest(`add-answer`, { quizId: id, value: question, answers }),
-    addAnsweredQuestion: (quizId, answers) => postRequest("add-stat", {quizId, answers})
+    addStatistics: (quizId, answers) => postRequest("add-stat", {quizId, answers})
 }

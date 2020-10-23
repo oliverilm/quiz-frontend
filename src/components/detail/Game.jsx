@@ -1,8 +1,29 @@
 import React from "react"
 import { Button, Divider, Paper, Table, TableBody, TableCell, TableRow, Typography } from "@material-ui/core"
 import "./style.css"
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
+
+
+
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
 
 
 const HtmlTooltip = withStyles((theme) => ({
@@ -14,21 +35,18 @@ const HtmlTooltip = withStyles((theme) => ({
     },
 }))(Tooltip);
 
-
-const Game = ({ quiz, stopGame, sendSession }) => {
-    const { name, questions } = quiz
+const Game = ({ quiz, stopGame, sendSession, mixup }) => {
+    const { name } = quiz
     const [questionsAnswered, setQuestionsAnswered] = React.useState([])
-    const [currentQuestion, setCurrentQuestion] = React.useState(questions[0])
+    const [currentQuestion, setCurrentQuestion] = React.useState(mixup[0])
     const [correctlyAnswered, setCorrectlyAnswered] = React.useState([])
     const [falselyAnswered, setFalselyAnswered] = React.useState([])
+    
 
     const getQuestion = () => {
-        if (questions[questionsAnswered.length]) {
-            return questions[questionsAnswered.length]
+        if (mixup[questionsAnswered.length]) {
+            return mixup[questionsAnswered.length]
         } else {
-            sendSession({
-                falselyAnswered, correctlyAnswered, quiz
-            })
             return false
         }
     }
@@ -42,7 +60,7 @@ const Game = ({ quiz, stopGame, sendSession }) => {
         const qa = questionsAnswered
         qa.push(answer)
         setQuestionsAnswered(qa)
-
+        
         setCurrentQuestion(getQuestion())
     }
 
@@ -70,11 +88,10 @@ const Game = ({ quiz, stopGame, sendSession }) => {
             }}>
                 <Typography variant={"h5"}>{name}</Typography>
                 <Button onClick={() => {
-                    if (currentQuestion !== false) {
-                        sendSession({
-                            falselyAnswered, correctlyAnswered, quiz
-                        })
-                    }
+                    
+                    sendSession({
+                        falselyAnswered, correctlyAnswered, quiz
+                    })
                     stopGame()
                 }}>Stop quiz</Button>
             </div>
@@ -82,6 +99,8 @@ const Game = ({ quiz, stopGame, sendSession }) => {
             <QuestionWithAnswers
                 quiz={quiz}
                 falselyAnswered={falselyAnswered}
+                sendSession={sendSession}
+                correctlyAnswered={correctlyAnswered}
                 onAnswer={(data) => {
                     submitAnswer(data)
                 }}
@@ -132,10 +151,12 @@ const Game = ({ quiz, stopGame, sendSession }) => {
     )
 }
 
-const QuestionWithAnswers = ({ onAnswer, question, quiz, falselyAnswered }) => {
+
+const QuestionWithAnswers = ({ onAnswer, question, quiz, falselyAnswered ,correctlyAnswered, sendSession}) => {
     const [revealed, setRevealed] = React.useState(false)
 
     const renderWrongAnswers = () => {
+
         return falselyAnswered.map(ans => {
             const myAnswer = ans.value
             const question = quiz.questions.find(q => q.id === ans.question)

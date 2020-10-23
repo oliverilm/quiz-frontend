@@ -7,6 +7,28 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Game from "./Game";
 
+
+
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
+
 const QuizDetail = () => {
     let { id } = useParams();
     const [quiz, setQuiz] = useState(null)
@@ -51,7 +73,12 @@ const QuizDetail = () => {
     }
 
     const sendSession = ({ falselyAnswered, correctlyAnswered, quiz }) => {
-
+        api.addStatistics({
+            quizId: quiz.id, 
+            falseGuess: falselyAnswered.map(answer => answer.id),
+            correctGuess: correctlyAnswered.map(answer => answer.id) 
+        }).then(res => console.log(res.data))
+        // console.log(quiz, falselyAnswered, correctlyAnswered)
     }
 
     const renderAllQuestions = () => {
@@ -116,7 +143,7 @@ const QuizDetail = () => {
                     ) : <></>}
                 </div>
             ) : (
-                    <Game quiz={quiz} stopGame={stopGame} sendSession={sendSession} />
+                    <Game quiz={quiz} mixup={shuffle(quiz.questions)} stopGame={stopGame} sendSession={sendSession} />
                 )}
 
         </div>
